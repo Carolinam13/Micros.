@@ -1,13 +1,20 @@
 pipeline {
     agent any
-    tools {        
-        gradle 'Gradle 7.5.1'
+    tools {
+       gradle'Gradle 7.5.1'
     }
     stages {
         stage('Build') {
             steps {
-                sh 'java -version'
-                sh 'java -jar rest_boton/build/libs/rest-1.0.jar'
+                script{
+                sh """
+                ls -la
+                cd Micro_Imagen
+                ls -la
+                pwd
+                gradle build
+               """
+                }
             }
         }
         stage('Test-sonar'){
