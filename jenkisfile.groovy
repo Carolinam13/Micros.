@@ -9,7 +9,7 @@ pipeline {
                 script{
                 sh """
                 ls -la
-                cd Micro_Imagen
+                cd micro_imagen
                 ls -la
                 pwd
                 gradle build
