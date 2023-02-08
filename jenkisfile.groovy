@@ -1,7 +1,7 @@
 pipeline {
     agent any
-    options {
-       skipStagesAfterUnstable()
+    tools {        
+        gradle 'Gradle 7.5.1'
     }
     stages {
         stage('Build') {
