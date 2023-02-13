@@ -4,7 +4,8 @@ pipeline {
        gradle'Gradle 7.5.1'
     }
     environment {
-       DOCKERHUB_CREDENTIALS=credentials('dockerhubjenkins')
+       registry = "lilianaa/dockermicro"
+       DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
     stages {
         stage('Build') {
@@ -22,19 +23,27 @@ pipeline {
         }
         stage('Test-sonar'){
             steps {
-                echo 'test succesfull'
+                script {
+                def scannerHome = tool 'sonarqube';
+                withSonarQubeEnv("sonarqube") { 
+                sh "${tool("sonarqube")}/bin/sonar-scanner"
+                //echo 'test succesfull'
+               }
             }
+        }
     }
          stage('Build Docker Image'){
              steps {
                  sh""" 
                  cd Micro_Imagen
                  pwd
-                 docker login -u $DOCKER_USER -p $DOCKER_PASSWORD """
+                 docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+                 docker build -t $DOCKER_USER/testjenkinsdocker:1.0 . """
                 }
             }
          stage('Push Docker Image') {
             steps {
+                sh " docker push $DOCKER_USER/testjenkinsdocker:1.0 "
                 echo 'succesfull'
             }
         }
