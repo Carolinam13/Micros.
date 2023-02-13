@@ -3,17 +3,13 @@ pipeline {
     tools {
        gradle'Gradle 7.5.1'
     }
-    environment {
-       registry = "lilianaa/dockermicro"
-       DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    }
     stages {
         stage('Build') {
             steps {
                 script{
                 sh """
                 ls -la
-                cd Micro_Imagen
+                cd micro_imagen
                 ls -la
                 pwd
                 gradle build
@@ -35,7 +31,7 @@ pipeline {
          stage('Build Docker Image'){
              steps {
                  sh""" 
-                 cd Micro_Imagen
+                 cd micro_imagen
                  pwd
                  docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
                  docker build -t $DOCKER_USER/testjenkinsdocker:1.0 . """
