@@ -17,7 +17,20 @@ pipeline {
                 }
             }
         }
-        
+        stage('test') {
+      steps {
+        script{
+          withSonarQubeEnv('sonar') {    
+            sh """
+            cd micro_imagen
+            gradle sonarqube \
+             -Dsonar.projectKey=sonar \
+             -Dsonar.host.url=http://localhost:30769 \
+             -Dsonar.login=5a8a4ad00a8b20fd9c3b31a9e6a9e31e44ca1ce6 """
+          }
+        }
+      }
+    }
          stage('Build Docker Image'){
              steps {
                  sh""" 
