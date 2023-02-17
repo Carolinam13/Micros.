@@ -24,9 +24,9 @@ pipeline {
             sh """
             cd micro_imagen
             gradle sonarqube \
-             -Dsonar.projectKey=sonar \
-             -Dsonar.host.url=http://localhost:30769 \
-             -Dsonar.login=5a8a4ad00a8b20fd9c3b31a9e6a9e31e44ca1ce6 """
+              -Dsonar.projectKey=sonar \
+              -Dsonar.host.url=http://10.244.0.14:9000 \
+              -Dsonar.login=f31c4016635ac3de6f2e64cdb8b03804fe6d20d0 """
           }
         }
       }
