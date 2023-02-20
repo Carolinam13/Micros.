@@ -35,13 +35,14 @@ pipeline {
              agent {
              label 'docker'
              }
-             step {
+             steps {
+             script {
                  sh""" 
                  cd micro_imagen
-                 pwd
                  docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
                  docker build -t $DOCKER_USER/testjenkinsdocker:1.0 . """
                 }
+              }
             }
          stage('Push Docker Image') {
             steps {
