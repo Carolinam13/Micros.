@@ -39,6 +39,7 @@ pipeline {
              script {
                  sh""" 
                  cd micro_imagen
+                 pwd
                  docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
                  //docker build -t $DOCKER_USER/test:1.0 . """
                 }
