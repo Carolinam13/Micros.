@@ -47,7 +47,11 @@ pipeline {
             }
          stage('Push Docker Image') {
             steps {
-                sh " docker push $DOCKER_USER/test:1.0 "
+                sh """
+                cd micro_imagen
+                pwd
+                docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+                docker push $DOCKER_USER/test:1.0 """
                 echo 'succesfull'
             }
         }
