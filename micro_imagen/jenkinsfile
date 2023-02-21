@@ -46,6 +46,9 @@ pipeline {
               }
             }
          stage('Push Docker Image') {
+            agent {
+             label 'docker'
+             }
             steps {
                 sh """
                 cd micro_imagen
