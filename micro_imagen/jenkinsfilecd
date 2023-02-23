@@ -5,19 +5,19 @@ pipeline {
         steps {
           //sh 'az login -u $MY_CRED_CLIENT_ID -p $MY_CRED_CLIENT_SECRET '
           sh 'az login'
-          sh ' az account set --subscription b225b620-21e4-48c8-947d-ce32339ce4b7 '
+          sh ' az account set --subscription 3f9bd67a-856a-4fbb-9e1d-170801a981cb '
           sh ' az aks get-credentials --resource-group prueba_terraform --name aks2 '
         }
       }
       stage ('Pull Image DockerHub') {
         agent   {
-            label 'dockerAgent'
+            label 'docker'
         }
         steps {
           sh"""
-            cd rest_boton
+            cd micro_imagen
             docker version
-            docker pull  $DOCKER_USER/microservicioboton:1.0
+            docker pull  $DOCKER_USER/test:1.0
           """
         }
       }
@@ -25,11 +25,10 @@ pipeline {
         steps {
           sh """
             az login
-            az account set --subscription b225b620-21e4-48c8-947d-ce32339ce4b7 
-            az aks get-credentials --resource-group prueba_terraform --name aks2       
-            cd rest_boton
-            kubectl apply -f k8s/ms-servicio.yaml
-            kubectl apply -f k8s/mypod.yaml
+            az account set --subscription 3f9bd67a-856a-4fbb-9e1d-170801a981cb 
+            az aks get-credentials --resource-group prueba_terraform --name aks2
+            cd micro_boton
+            kubectl apply -f k8s/micro_imagen.yaml
           """
       }
     }
