@@ -2,13 +2,13 @@ pipeline {
   agent any
   stages {
    //stage('Login Azure') {
-        steps {
+        //steps {
           //sh 'az login -u $MY_CRED_CLIENT_ID -p $MY_CRED_CLIENT_SECRET '
-          sh 'az login'
-          sh ' az account set --subscription 3f9bd67a-856a-4fbb-9e1d-170801a981cb '
-          sh ' az aks get-credentials --resource-group prueba_terraform --name aks2 '
-        }
-      }
+          //sh 'az login'
+          //sh ' az account set --subscription 3f9bd67a-856a-4fbb-9e1d-170801a981cb '
+          //sh ' az aks get-credentials --resource-group prueba_terraform --name aks2 '
+       //}
+      //}
       stage ('Pull Image DockerHub') {
         agent   {
             label 'docker'
