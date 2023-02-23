@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Login Azure') {
+   //stage('Login Azure') {
         steps {
           //sh 'az login -u $MY_CRED_CLIENT_ID -p $MY_CRED_CLIENT_SECRET '
           sh 'az login'
