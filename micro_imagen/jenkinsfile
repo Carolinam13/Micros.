@@ -17,7 +17,7 @@ pipeline {
                 }
             }
         }
-        stage('test') {
+        stage('Test Sonar') {
       steps {
         script{
           withSonarQubeEnv('sonar') {    
