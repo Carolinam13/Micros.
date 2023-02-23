@@ -1,21 +1,37 @@
 pipeline {
-    agent any
-    tools {
-       gradle'Gradle 7.5.1'
-    }
-    stages {
-        stage('Build') {
-            steps {
-                script{
-                sh """
-                ls -la
-                cd micro_imagen
-                ls -la
-                pwd
-                gradle build
-               """
-                }
-            }
+  agent any
+  stages {
+    stage('Login Azure') {
+        steps {
+          //sh 'az login -u $MY_CRED_CLIENT_ID -p $MY_CRED_CLIENT_SECRET '
+          sh 'az login'
+          sh ' az account set --subscription b225b620-21e4-48c8-947d-ce32339ce4b7 '
+          sh ' az aks get-credentials --resource-group prueba_terraform --name aks2 '
         }
-     }
+      }
+      stage ('Pull Image DockerHub') {
+        agent   {
+            label 'dockerAgent'
+        }
+        steps {
+          sh"""
+            cd rest_boton
+            docker version
+            docker pull  $DOCKER_USER/microservicioboton:1.0
+          """
+        }
+      }
+      stage ('Apply Service') {
+        steps {
+          sh """
+            az login
+            az account set --subscription b225b620-21e4-48c8-947d-ce32339ce4b7 
+            az aks get-credentials --resource-group prueba_terraform --name aks2       
+            cd rest_boton
+            kubectl apply -f k8s/ms-servicio.yaml
+            kubectl apply -f k8s/mypod.yaml
+          """
+      }
+    }
+  }
 }
