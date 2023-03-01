@@ -5,8 +5,8 @@ pipeline {
         steps {
           //sh 'az login -u $MY_CRED_CLIENT_ID -p $MY_CRED_CLIENT_SECRET '
           sh 'az login'
-          sh ' az account set --subscription 3f9bd67a-856a-4fbb-9e1d-170801a981cb '
-          sh ' az aks get-credentials --resource-group prueba_terraform --name aks2 '
+          az account set --subscription b5cfaa83-9bab-4f61-969a-af3ba7881238 
+          az aks get-credentials --resource-group INFRAESTRUCTURA_TERRAFORM --name aks-5
         }
       }
       stage ('Pull Image DockerHub') {
@@ -25,9 +25,9 @@ pipeline {
         steps {
           sh """
             az login
-            az account set --subscription 3f9bd67a-856a-4fbb-9e1d-170801a981cb 
-            az aks get-credentials --resource-group prueba_terraform --name aks2
-            cd micro_boton
+            az account set --subscription b5cfaa83-9bab-4f61-969a-af3ba7881238 
+            az aks get-credentials --resource-group INFRAESTRUCTURA_TERRAFORM --name aks-5
+            cd micro_imagen
             kubectl apply -f k8s/micro_imagen.yaml
           """
       }
